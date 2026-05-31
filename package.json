@@ -1,0 +1,48 @@
+{
+  "name": "git-sentinel",
+  "version": "1.0.0",
+  "description": "AI-Powered Git Repository Assistant, Code Reviewer, and Automator",
+  "main": "dist/index.js",
+  "bin": {
+    "git-sentinel": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "git",
+    "github-action",
+    "ai",
+    "code-review",
+    "pr-review",
+    "triage",
+    "openai",
+    "codex",
+    "automation"
+  ],
+  "author": "Erdem Çakılcı <erdemcakilci@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "ora": "^5.4.1",
+    "simple-git": "^3.22.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.4",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,33 @@
+name: Sentinel Code Review
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Essential to get full git history for diff comparison
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install & Build Sentinel
+        run: |
+          npm ci
+          npm run build
+          npm link
+
+      - name: Perform AI Review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          git-sentinel review --target origin/${{ github.base_ref }}

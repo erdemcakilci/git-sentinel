@@ -1,0 +1,34 @@
+name: Sentinel Release Autopilot
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-release-notes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install & Build Sentinel
+        run: |
+          npm ci
+          npm run build
+          npm link
+
+      - name: Generate Release Notes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          git-sentinel release --version-name ${{ github.ref_name }}
